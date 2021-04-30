@@ -30,6 +30,9 @@
                   <label for="password">パスワード</label>
                   <input class="form-control" type="password" id="password" name="password">
                 </div>
+
+                <input type="hidden" name="remember" id="remember" value="on">
+
                 <div class="md-form">
                   <label for="password_confirmation">パスワード(確認)</label>
                   <input class="form-control" type="password" id="password_confirmation" name="password_confirmation">
