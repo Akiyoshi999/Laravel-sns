@@ -6,6 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
 {
+    protected $fillable = [
+        'title',
+        'body'
+    ];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -31,9 +36,9 @@ class ArticleRequest extends FormRequest
 
     public function attributes()
     {
-        return[
+        return [
             'title' => 'タイトル',
             'body' => '本文',
-        ]
+        ];
     }
 }
