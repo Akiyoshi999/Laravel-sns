@@ -41,6 +41,8 @@ class ArticleRequest extends FormRequest
     }
 
     // jsonのタグを整形
+    // passedValidationフォームリクエストのバリデーションが成功した後に自動的に
+    // 呼ばれるメソッド
     public function passedValidation()
     {
         $this->tags = collect(json_decode($this->tags))
