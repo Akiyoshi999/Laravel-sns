@@ -24,3 +24,6 @@ ROute::prefix('articles')->name('articles.')->group(function () {
     Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
 });
 Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+Route::prefix('users')->name('users.')->group(function () {
+    Route::get('/{name}', 'UserController@show')->name('show');
+});
