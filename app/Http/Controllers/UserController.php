@@ -28,8 +28,8 @@ class UserController extends Controller
             return abort('404', 'Cannot follow yourself');
         }
 
-        $request->user()->following()->detach($user);
-        $request->user()->following()->attach($user);
+        $request->user()->followings()->detach($user);
+        $request->user()->followings()->attach($user);
 
         return ['name' => $name];
     }
@@ -44,7 +44,7 @@ class UserController extends Controller
             return abort('404', 'Cannot follow yourself');
         }
 
-        $request->user()->following()->detach($user);
+        $request->user()->followings()->detach($user);
 
         return ['name' => $name];
     }
