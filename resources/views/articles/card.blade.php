@@ -66,7 +66,8 @@
   <div class="card-body pt-0 pb-2 pl-3">
     <div class="card-text">
       <article-like :initial-is-liked-by='@json($article->isLikeBy(Auth::user()))'
-        :initial-count-likes='@json($article->count_likes)'>
+        :initial-count-likes='@json($article->count_likes)' :authorized='@json(Auth::check())'
+        endpoint="{{ route('articles.like', ['article' => $article]) }}">
       </article-like>
     </div>
   </div>
