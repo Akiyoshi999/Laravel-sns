@@ -46,16 +46,16 @@ class User extends Authenticatable
     }
 
     // followテーブルの紐付け
-    public function users(): BelongsToMany
+    public function followers(): BelongsToMany
     {
         return $this->belongsToMany('App\User', 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
     // フォロー中かどうかの判定
-    public function isFollowedBy(string $user):bool
+    public function isFollowedBy(?User $user): bool
     {
-        return $user 
-        ? (bool)$this->followers->where('id',$user->id)->count();
-        : false;
+        return $user
+            ? (bool)$this->followers->where('id', $user->id)->count()
+            : false;
     }
 }

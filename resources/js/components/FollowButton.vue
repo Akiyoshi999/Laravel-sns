@@ -15,9 +15,15 @@
 
 <script>
 export default {
+    props:{
+        initialIsFollowedBy:{
+            type:Boolean,
+            defalut:false,
+        },
+    },
     data() {
         return {
-            isFollowedBy:false,
+            isFollowedBy:this.initialIsFollowedBy,
         }
     },
     computed:{
@@ -26,7 +32,7 @@ export default {
             ? 'bg-primary text-white'
             :'bg-white'
         },
-        buttonColor(){
+        buttonIcon(){
             return this.isFollowedBy
             ? 'fas fa-user-check'
             : 'fas fa-user-plus'
