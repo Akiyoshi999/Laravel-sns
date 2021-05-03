@@ -25,6 +25,12 @@ class Article extends Model
         return $this->belongsToMany('App\User', 'likes')->withTimestamps();
     }
 
+    // tagsテーブルへの紐付け
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
     // ユーザーがいいね済みかの判定
     public function isLikeBy(?User $user): bool
     {
