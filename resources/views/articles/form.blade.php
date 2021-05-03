@@ -4,7 +4,7 @@
   <input class="form-control" type="text" name="title" required value="{{ $article->title ?? old('title') }}">
 </div>
 <div class="form-group">
-  <article-tags-input>
+  <article-tags-input :initial-tags='@json($tagNames ?? [])'>
   </article-tags-input>
 </div>
 <div class="form-group">
