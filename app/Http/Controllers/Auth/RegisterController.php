@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
@@ -69,5 +71,56 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * ユーザー名登録画面表示処理
+     * 
+     * @param Request $request
+     * @param string $provider
+     * @return Response
+     */
+    public function showProviderUserRegistrationForm(Request $request, string $provider)
+    {
+        $token = $request->token;
+
+        // tokenを利用してproviderからユーザー情報取得
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        return view('auth.social_register', [
+            'provider' => $provider,
+            'email' => $providerUser->getEmail(),
+            'token' => $token,
+        ]);
+    }
+
+    /**
+     * プロバイダーのユーザー登録
+     * @param Request $request
+     * @param string $provider
+     */
+    public function registerProviderUser(Request $request, string $provider)
+    {
+        // バリデーション
+        $request->validate([
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'],
+            'token' => ['required', 'string'],
+        ]);
+
+        $token = $request->token;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $providerUser->getEmail(),
+            'password' => null,
+        ]);
+
+        // ログイン状態保持
+        $this->guard()->login($user, true);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }
